@@ -1,0 +1,19 @@
+<%= single[:route] %> <%= single[:name] %>
+<br/>
+Robocze
+<br/>
+<%= render partial: 'departure', collection: single[:working] %>
+<br/>
+Soboty
+<br/>
+<%= render partial: 'departure', collection: single[:saturday] %>
+<br/>
+Niedziele i swieta
+<br/>
+<%= render partial: 'departure', collection: single[:sunday] %>
+<br/>
+Wolne
+<br/>
+<%= render partial: 'departure', collection: single[:free] %>
+<br/>
+<br/>

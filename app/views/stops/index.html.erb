@@ -1,6 +1,7 @@
+<h1>Wyszukiwarka odjazdow KZK GOP</h1>
 <%= form_tag stops_path, method: 'get' do %>
-  <%= label_tag :query, 'Search for:' %>
+  <%= label_tag :query, 'Szukaj przystankow:' %>
   <%= text_field_tag :query %>
-  <%= submit_tag 'Search' %>
+  <%= submit_tag 'Szukaj' %>
 <% end %>
 <%= render @stops %>

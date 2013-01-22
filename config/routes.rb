@@ -1,8 +1,11 @@
 RubyRailsSample::Application.routes.draw do
 
   resources :stops do
+    resources :departures
     resources :directions do
-      resources :departures
+      scope module: :directions do
+        resources :departures
+      end
     end
   end
 
