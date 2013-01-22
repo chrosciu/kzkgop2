@@ -37,10 +37,20 @@ class Departure
             minute = col.text.to_i
             departures << new(hour: hour, minute: minute, scope: 14)
           end
+        elsif row.attr(:class).include? 'typ_dnia_17'
+          row.css('a').each do |col|
+            minute = col.text.to_i
+            departures << new(hour: hour, minute: minute, scope: 17)
+          end
         elsif row.attr(:class).include? 'typ_dnia_18'
           row.css('a').each do |col|
             minute = col.text.to_i
             departures << new(hour: hour, minute: minute, scope: 18)
+          end
+        elsif row.attr(:class).include? 'typ_dnia_19'
+          row.css('a').each do |col|
+            minute = col.text.to_i
+            departures << new(hour: hour, minute: minute, scope: 19)
           end
         end
       end
