@@ -1,3 +1,2 @@
-<%= direction.route %>
-<%= direction.name %>
+<%= link_to "#{direction.route} #{direction.name}", stop_direction_departures_path(stop_id: @stop_id, direction_id: direction.id) %>
 <br/>

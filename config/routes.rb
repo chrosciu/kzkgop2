@@ -1,7 +1,9 @@
 RubyRailsSample::Application.routes.draw do
 
   resources :stops do
-    resources :directions
+    resources :directions do
+      resources :departures
+    end
   end
 
   # The priority is based upon order of creation:
