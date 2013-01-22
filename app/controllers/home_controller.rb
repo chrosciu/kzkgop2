@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
   def index
-    redirect_to stop_directions_path(stop_id: 127)
+    redirect_to stops_path
   end
 end
