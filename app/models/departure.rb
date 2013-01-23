@@ -58,7 +58,7 @@ class Departure
     end
 
     def uri(stop_id, direction_id)
-      "http://rozklady.kzkgop.pl/index.php?id_przystanku=#{stop_id}&co=tabliczka_zbiorcza&kierunki[]=#{direction_id}"
+      URI.escape "http://rozklady.kzkgop.pl/index.php?id_przystanku=#{stop_id}&co=tabliczka_zbiorcza&kierunki[]=#{direction_id}"
     end
 
     def within_scope(departures, scope)

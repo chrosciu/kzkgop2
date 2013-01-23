@@ -32,7 +32,7 @@ class Direction
     end
 
     def uri(stop_id)
-      "http://rozklady.kzkgop.pl/index.php?co=linie_przystanku&id_przystanku=#{stop_id}"
+      URI.escape "http://rozklady.kzkgop.pl/index.php?co=linie_przystanku&id_przystanku=#{stop_id}"
     end
 
   end

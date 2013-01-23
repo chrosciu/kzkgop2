@@ -19,7 +19,7 @@ class Stop
     end
 
     def uri(query)
-      "http://rozklady.kzkgop.pl/ajax/przystanki_quicksearch.php?q=#{query}"
+      URI.escape "http://rozklady.kzkgop.pl/ajax/przystanki_quicksearch.php?q=#{query.try(:pl2en!)}"
     end
 
   end
