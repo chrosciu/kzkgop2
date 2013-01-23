@@ -1,23 +1,35 @@
+<% if @working.present? %>
 Robocze
 <br/>
 <%= render partial: 'departure', collection: @working %>
 <br/>
+<% end %>
+<% if @school.present? %>
 Robocze szkolne
 <br/>
 <%= render partial: 'departure', collection: @school %>
 <br/>
+<% end %>
+<% if @holiday.present? %>
 Robocze w ferie i wakacje
 <br/>
 <%= render partial: 'departure', collection: @holiday %>
 <br/>
+<% end %>
+<% if @saturday.present? %>
 Soboty
 <br/>
 <%= render partial: 'departure', collection: @saturday %>
 <br/>
+<% end %>
+<% if @sunday.present? %>
 Niedziele i swieta
 <br/>
 <%= render partial: 'departure', collection: @sunday %>
 <br/>
+<% end %>
+<% if @free.present? %>
 Wolne
 <br/>
 <%= render partial: 'departure', collection: @free %>
+<% end %>
