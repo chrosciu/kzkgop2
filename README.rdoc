@@ -1,7 +1,9 @@
-Prymitywna wyszukiwarka odjazdow KZK GOP.
-Umozliwia wyswietlenie wszystkich odjazdow wszystkich linii naraz z danego przystanku.
+Simple KZK GOP departure searcher.
 
-#TODO:
-- optymalizacja pobierania odjazdow (jeden request per jeden przystanek)
-- wyswietlanie legendy
+Allows display all departures of all lines on single stop.
+
+Demo available at:
+{http://kzkgop.herokuapp.com}[http://kzkgop.herokuapp.com]
+
+KZK GOP (http://www.kzkgop.pl) is public transport authority in Upper Silesia, Poland.
 
