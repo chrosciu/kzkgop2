@@ -1,3 +1,3 @@
-<% @all.each do |single| %>
-  <%= render partial: 'single', locals: { single: single } %>
+<% @all_scoped_departures.each do |direction, scoped_departures| %>
+  <%= render partial: 'direction', locals: { direction: direction, scoped_departures: scoped_departures } %>
 <% end %>
