@@ -1,4 +1,4 @@
-<% if true %>
+<% if departure.future? %>
   <i>
 <% end %>
 <a href="<%= course_path(departure.course_id) %>"><%= departure.hour %>:<%= "%02d" % departure.minute %><%= departure.notice %></a>
