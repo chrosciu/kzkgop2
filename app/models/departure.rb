@@ -54,8 +54,12 @@ class Departure
       hour > current_hour || (hour == current_hour && minute >= current_minute)
     end
 
+    def zone
+      @zone ||= ActiveSupport::TimeZone['Warsaw']
+    end
+
     def current_time
-      Time.now
+      zone.at(Time.now)
     end
 
     def current_hour
