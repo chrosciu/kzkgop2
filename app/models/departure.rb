@@ -8,6 +8,7 @@ class Departure
   attribute :scope_id, type: Integer
   attribute :notice, type: String
   attribute :future, type: Boolean
+  attribute :course_id, type: Integer
 
   class << self
 
@@ -42,7 +43,9 @@ class Departure
               minute = col.text.to_i
               notice = col.css('span').text
               future = in_future?(hour, minute)
-              departures << new(hour: hour, minute: minute, scope_id: scope.id, notice: notice, future: future)
+              course_href = col.attr('href')
+              course_id = course_href.scan(/id_kursu=(\d+)\&/).flatten.first.to_i
+              departures << new(hour: hour, minute: minute, scope_id: scope.id, notice: notice, future: future, course_id: course_id)
             end
           end
         end

@@ -8,6 +8,7 @@ RubyRailsSample::Application.routes.draw do
       end
     end
   end
+  resources :courses
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

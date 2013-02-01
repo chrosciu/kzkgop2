@@ -1,7 +1,7 @@
-<% if departure.future? %>
-  <u>
+<% if true %>
+  <i>
 <% end %>
-<%= departure.hour %>:<%= "%02d" % departure.minute %><%= departure.notice %>
+<a href="<%= course_path(departure.course_id) %>"><%= departure.hour %>:<%= "%02d" % departure.minute %><%= departure.notice %></a>
 <% if departure.future? %>
-  </u>
+  </i>
 <% end %>
