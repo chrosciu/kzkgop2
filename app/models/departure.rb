@@ -6,6 +6,7 @@ class Departure
   attribute :hour, type: Integer
   attribute :minute, type: Integer
   attribute :scope_id, type: Integer
+  attribute :notice, type: String
 
   class << self
 
@@ -36,7 +37,8 @@ class Departure
           if scope = Scope.find_by_html_class(row.attr(:class))
             row.css('a').each do |col|
               minute = col.text.to_i
-              departures << new(hour: hour, minute: minute, scope_id: scope.id)
+              notice = col.css('span').text
+              departures << new(hour: hour, minute: minute, scope_id: scope.id, notice: notice)
             end
           end
         end
