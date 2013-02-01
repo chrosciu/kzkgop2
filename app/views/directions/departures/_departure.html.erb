@@ -1,7 +1,7 @@
 <% if departure.future? %>
-  <mark>
+  <u>
 <% end %>
 <%= departure.hour %>:<%= "%02d" % departure.minute %><%= departure.notice %>
 <% if departure.future? %>
-  </mark>
+  </u>
 <% end %>
