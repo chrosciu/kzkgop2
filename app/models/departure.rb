@@ -7,6 +7,7 @@ class Departure
   attribute :minute, type: Integer
   attribute :scope_id, type: Integer
   attribute :notice, type: String
+  attribute :future, type: Boolean
 
   class << self
 
@@ -27,6 +28,8 @@ class Departure
       scoped(departures)
     end
 
+    private
+
     def parse_rows(rows)
       departures = []
       hour = nil
@@ -38,7 +41,8 @@ class Departure
             row.css('a').each do |col|
               minute = col.text.to_i
               notice = col.css('span').text
-              departures << new(hour: hour, minute: minute, scope_id: scope.id, notice: notice)
+              future = in_future?(hour, minute)
+              departures << new(hour: hour, minute: minute, scope_id: scope.id, notice: notice, future: future)
             end
           end
         end
@@ -46,7 +50,21 @@ class Departure
       departures
     end
 
-    private
+    def in_future?(hour, minute)
+      hour > current_hour || (hour == current_hour && minute >= current_minute)
+    end
+
+    def current_time
+      Time.now
+    end
+
+    def current_hour
+      current_time.hour
+    end
+
+    def current_minute
+      current_time.min
+    end
 
     def uri(stop_id, direction_id)
       URI.escape "http://rozklady.kzkgop.pl/index.php?id_przystanku=#{stop_id}&co=tabliczka_zbiorcza&kierunki[]=#{direction_id}"
