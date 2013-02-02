@@ -20,9 +20,11 @@ class Course
     def parse_rows(rows)
       course_stops = []
       rows.each do |row|
+        stop_href = row.css('a').first.attr('href')
+        stop_id = stop_href.scan(/id_przystanku=(\d+)\z/).flatten.first.to_i
         name = row.css('td')[1].text
         time = row.css('td')[2].text
-        course_stops << CourseStop.new(name: name, time: time)
+        course_stops << CourseStop.new(stop_id: stop_id, name: name, time: time)
       end
       course_stops
     end
