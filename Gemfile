@@ -31,6 +31,7 @@ gem 'pry-remote'
 
 gem 'nokogiri'
 gem 'active_attr'
+gem 'rufus-scheduler'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
