@@ -1,6 +1,6 @@
 <%= @stop.name %>
 <br/>
-<%= form_tag('#', method: :get) do %>
+<%= form_tag(stop_departures_path(stop_id: @stop.id), method: :get) do %>
   <%= render partial: 'direction', collection: @stop.directions %>
   <%= submit_tag('Pokaz') %>
 <% end %>
