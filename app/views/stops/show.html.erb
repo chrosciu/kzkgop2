@@ -1,0 +1,6 @@
+<%= @stop.name %>
+<br/>
+<%= form_tag('#', method: :get) do %>
+  <%= render partial: 'direction', collection: @stop.directions %>
+  <%= submit_tag('Pokaz') %>
+<% end %>

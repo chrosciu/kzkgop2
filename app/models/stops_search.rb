@@ -1,6 +1,7 @@
 require 'open-uri'
 
-class StopsQuery
+class StopsSearch
+
   include ActiveAttr::Model
 
   attribute :query, type: String
@@ -14,7 +15,7 @@ class StopsQuery
      body = open(uri)
      entries = body.string.force_encoding('UTF-8').split(/\n/).map {|s| s.split('|')}
      entries.each do |entry|
-       stops << new(id: entry[1].to_i, name: entry[0])
+       stops << Stop.new(id: entry[1].to_i, name: entry[0])
      end
      stops
   end
