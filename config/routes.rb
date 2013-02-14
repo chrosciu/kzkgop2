@@ -2,7 +2,6 @@ RubyRailsSample::Application.routes.draw do
 
   resources :stops, only: [:index, :show] do
     resources :departures, only: :index
-    resources :directions, only: :index
   end
   resources :courses, only: :show
 
