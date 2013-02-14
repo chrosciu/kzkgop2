@@ -1,5 +1,3 @@
-require 'open-uri'
-
 class Departure
   include ActiveAttr::Model
 

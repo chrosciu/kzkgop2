@@ -1,5 +1,3 @@
-require 'open-uri'
-
 class CourseStop
   include ActiveAttr::Model
 

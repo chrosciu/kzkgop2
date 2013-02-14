@@ -1,5 +1,3 @@
-require 'open-uri'
-
 class StopsSearch
 
   include ActiveAttr::Model
