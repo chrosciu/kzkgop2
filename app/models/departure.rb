@@ -12,16 +12,7 @@ class Departure
 
   class << self
 
-    def fetch_all_scoped_departures(stop_id)
-      directions = Direction.fetch_directions(stop_id)
-      all_scoped_departures = {}
-      directions.each do |direction|
-        all_scoped_departures[direction] = fetch_scoped_departures(stop_id, direction.id)
-      end
-      all_scoped_departures
-    end
-
-    def fetch_selected_scoped_departures(stop_id, direction_ids)
+    def fetch_all_scoped_departures(stop_id, direction_ids)
       directions = Direction.fetch_directions(stop_id)
       directions.select! { |direction| direction_ids.include? direction.id.to_s }
       all_scoped_departures = {}
