@@ -1,14 +1,10 @@
 RubyRailsSample::Application.routes.draw do
 
-  resources :stops do
-    resources :departures
-    resources :directions do
-      scope module: :directions do
-        resources :departures
-      end
-    end
+  resources :stops, only: [:index, :show] do
+    resources :departures, only: :index
+    resources :directions, only: :index
   end
-  resources :courses
+  resources :courses, only: :show
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

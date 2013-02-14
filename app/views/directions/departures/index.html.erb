@@ -1,6 +1,0 @@
-<% @scoped_departures.each do |scope, departures| %>
-  <% if departures.present? %>
-    <%= render partial: 'scope', locals: { scope: scope, departures: departures } %>
-  <% end %>
-<% end %>
-
