@@ -13,7 +13,7 @@ class Departure
   class << self
 
     def fetch_all_scoped_departures(stop_id, direction_ids)
-      directions = Direction.fetch_directions(stop_id)
+      directions = StopFetcher.new(stop_id: stop_id).stop.directions
       directions.select! { |direction| direction_ids.include? direction.id.to_s }
       all_scoped_departures = {}
       directions.each do |direction|
