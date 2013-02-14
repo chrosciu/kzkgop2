@@ -1,7 +1,7 @@
 class StopsController < ApplicationController
 
   def index
-    @stops = StopsSearch.new(query: params[:query]).stops
+    @stops = params[:query].present? ? StopsSearch.new(query: params[:query]).stops : []
   end
 
   def show
