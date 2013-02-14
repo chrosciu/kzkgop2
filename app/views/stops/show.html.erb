@@ -1,5 +1,7 @@
 <%= @stop.name %>
 <br/>
+<%= link_to 'Wszystkie kierunki', stop_departures_path(stop_id: @stop.id, direction_ids: @stop.directions.map(&:id)) %>
+<br/>
 <%= form_tag(stop_departures_path(stop_id: @stop.id), method: :get) do %>
   <%= render partial: 'direction', collection: @stop.directions %>
   <%= submit_tag('Pokaz') %>

@@ -1,4 +1,2 @@
-<%= stop.name %>
-<%= link_to 'Wszystkie', stop_departures_path(stop_id: stop.id) %>
-<%= link_to 'Pojedyncze', stop_path(id: stop.id) %>
+<%= link_to stop.name, stop_path(id: stop.id) %>
 <br/>
