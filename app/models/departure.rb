@@ -10,22 +10,22 @@ class Departure
 
   class << self
 
-    def fetch_all_scoped_departures(stop_id, direction_ids)
+    def fetch_all_scoped_departures(stop_id, direction_ids, scope_ids)
       directions = StopFetcher.new(stop_id: stop_id).stop.directions
       directions.select! { |direction| direction_ids.include? direction.id.to_s }
       all_scoped_departures = {}
       directions.each do |direction|
-        all_scoped_departures[direction] = fetch_scoped_departures(stop_id, direction.id)
+        all_scoped_departures[direction] = fetch_scoped_departures(stop_id, direction.id, scope_ids)
       end
       all_scoped_departures
     end
 
-    def fetch_scoped_departures(stop_id, direction_id)
+    def fetch_scoped_departures(stop_id, direction_id, scope_ids)
       body = open(uri(stop_id, direction_id), 'Cookie' => 'typ_wyswietlania_rozkladu=pionowo;')
       doc = Nokogiri::HTML(body)
       rows = doc.css('table#tabliczka_pionowo').css('td')
       departures = parse_rows(rows)
-      scoped(departures)
+      scoped(departures, scope_ids)
     end
 
     private
@@ -80,10 +80,12 @@ class Departure
       departures.select {|d| d.scope_id == scope.id }
     end
 
-    def scoped(departures)
+    def scoped(departures, scope_ids)
       scoped = {}
       Scope.all.each do |scope|
-        scoped[scope] = within_scope(departures, scope)
+        if scope_ids.include? scope.id.to_s
+          scoped[scope] = within_scope(departures, scope)
+        end
       end
       scoped
     end
