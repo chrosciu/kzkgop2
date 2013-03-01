@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/packetman/zepto-rails.git
+  revision: 45a50a301af8bd3b306182549450de5d5d32508d
+  specs:
+    zepto-rails (0.8.0)
+      rails (>= 3.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -136,3 +143,4 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   sqlite3
   uglifier (>= 1.0.3)
+  zepto-rails!

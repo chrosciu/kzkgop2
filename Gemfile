@@ -7,6 +7,8 @@ gem 'rails', '3.2.12'
 
 gem 'pg'
 
+gem 'zepto-rails', github: 'packetman/zepto-rails'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

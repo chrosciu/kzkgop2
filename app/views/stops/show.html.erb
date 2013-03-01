@@ -1,6 +1,6 @@
 <%= @stop.name %>
 <br/>
-<%= link_to 'Wszystkie kierunki', stop_departures_path(stop_id: @stop.id, direction_ids: @stop.directions.map(&:id)) %>
+<%= link_to 'Wszystkie kierunki', stop_departures_path(stop_id: @stop.id, direction_ids: @stop.directions.map(&:id)), id: 'all_directions' %>
 <br/>
 <%= form_tag(stop_departures_path(stop_id: @stop.id), method: :get) do %>
   <%= render partial: 'scope', collection: Scope.all %>
