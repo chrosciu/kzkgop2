@@ -31,6 +31,10 @@ class Scope
       ALL.select { |scope| klass.include? scope.html_class }.first
     end
 
+    def find(id)
+      ALL.select { |scope| scope.id == id }.first
+    end
+
   end
 
   def html_class
