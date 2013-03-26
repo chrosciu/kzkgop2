@@ -4,13 +4,23 @@ class DepartureFetcher
 
   def initialize(options =  {})
     self.stop_id = options[:stop_id]
-    self.direction_ids = options[:direction_ids]
-    self.scope_ids = options[:scope_ids]
+    self.direction_ids = (options[:direction_ids] || []).map(&:to_i)
+    self.scope_ids = (options[:scope_ids] || []).map(&:to_i)
   end
 
   def to_s
     "#<DepartureFetcher stop_id: #{stop_id.inspect}, direction_ids: #{direction_ids.inspect}, scope_ids: #{scope_ids.inspect}>"
   end
+
+  def fetch
+    body = open(uri, 'Cookie' => 'typ_wyswietlania_rozkladu=pionowo;')
+    doc = Nokogiri::HTML(body)
+    directions = doc.css('div#tabliczka_topinfo').map { |direction_info| map_direction_info(direction_info) }
+    departures = doc.css('table#tabliczka_pionowo').map { |direction_table| scoped_direction_departures(direction_table) }
+    Hash[*directions.zip(departures).flatten]
+  end
+
+  private
 
   def uri
     URI.escape "http://rozklady.kzkgop.pl/index.php?id_przystanku=#{stop_id}&co=tabliczka_zbiorcza&#{directions_query}"
@@ -20,13 +30,8 @@ class DepartureFetcher
     direction_ids.map { |direction_id| "kierunki[]=#{direction_id}" }.join('&')
   end
 
-  def fetch
-    body = open(uri, 'Cookie' => 'typ_wyswietlania_rozkladu=pionowo;')
-    doc = Nokogiri::HTML(body)
-    binding.pry
-    #doc.css('div#tabliczka_topinfo').first.css('a#nr_lini_rozklad').text
-    #doc.css('div#tabliczka_topinfo').first.css('h3').text[10..-1]
-    doc.css('table#tabliczka_pionowo').map {|direction_table| scoped_direction_departures(direction_table)}
+  def map_direction_info(direction_info)
+    Direction.new(route: direction_info.css('a#nr_lini_rozklad').text, name: direction_info.css('h3').text[10..-1])
   end
 
   def scoped_direction_departures(direction_table)
@@ -34,7 +39,7 @@ class DepartureFetcher
     departures = parse_rows(rows)
     departures = departures.group_by {|departure| departure.scope_id}
     departures.keys.each do |scope_id|
-      departures[Scope.find(scope_id)] = departures[scope_id] if scope_ids.include? scope_id
+      departures[Scope.find(scope_id)] = departures[scope_id]
       departures.delete(scope_id)
     end
     departures
@@ -47,7 +52,8 @@ class DepartureFetcher
       if row.attr(:class).include? 'td_godziny'
         hour = row.text.to_i
       else
-        if scope = Scope.find_by_html_class(row.attr(:class))
+        scope = Scope.find_by_html_class(row.attr(:class))
+        if scope && scope_ids.include?(scope.id)
           row.css('a').each do |col|
             minute = col.text.to_i
             notice = col.css('span').text
