@@ -4,7 +4,7 @@ class DepartureFetcher
 
   def initialize(options =  {})
     self.stop_id = options[:stop_id]
-    self.direction_ids = (options[:direction_ids] || []).map(&:to_i)
+    self.direction_ids = (options[:direction_ids] || []).map(&:to_i).sort
     self.scope_ids = (options[:scope_ids] || []).map(&:to_i)
   end
 
@@ -15,7 +15,7 @@ class DepartureFetcher
   def fetch
     body = open(uri, 'Cookie' => 'typ_wyswietlania_rozkladu=pionowo;')
     doc = Nokogiri::HTML(body)
-    directions = doc.css('div#tabliczka_topinfo').map { |direction_info| map_direction_info(direction_info) }
+    directions = doc.css('div#tabliczka_topinfo').each_with_index.map { |direction_info, index| map_direction_info(direction_info, direction_ids[index]) }
     departures = doc.css('table#tabliczka_pionowo').map { |direction_table| scoped_direction_departures(direction_table) }
     Hash[*directions.zip(departures).flatten]
   end
@@ -30,8 +30,8 @@ class DepartureFetcher
     direction_ids.map { |direction_id| "kierunki[]=#{direction_id}" }.join('&')
   end
 
-  def map_direction_info(direction_info)
-    Direction.new(route: direction_info.css('a#nr_lini_rozklad').text, name: direction_info.css('h3').text[10..-1])
+  def map_direction_info(direction_info, direction_id)
+    Direction.new(id: direction_id, route: direction_info.css('a#nr_lini_rozklad').text, name: direction_info.css('h3').text[10..-1])
   end
 
   def scoped_direction_departures(direction_table)
