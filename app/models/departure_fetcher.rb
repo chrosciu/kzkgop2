@@ -23,6 +23,9 @@ class DepartureFetcher
   def fetch
     body = open(uri, 'Cookie' => 'typ_wyswietlania_rozkladu=pionowo;')
     doc = Nokogiri::HTML(body)
+    binding.pry
+    #doc.css('div#tabliczka_topinfo').first.css('a#nr_lini_rozklad').text
+    #doc.css('div#tabliczka_topinfo').first.css('h3').text[10..-1]
     doc.css('table#tabliczka_pionowo').map {|direction_table| scoped_direction_departures(direction_table)}
   end
 
